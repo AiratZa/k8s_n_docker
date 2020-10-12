@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/mysql_volume"
+    path: "/tmp/mysql_volume"
 
 ---
 
@@ -28,4 +28,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/influxdb_volume"
+    path: "/tmp/influxdb_volume"

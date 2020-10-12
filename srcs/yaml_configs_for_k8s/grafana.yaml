@@ -1,38 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: grafana
 spec:
   selector:
     matchLabels:
-      app: wordpress
-  strategy:
-    type: Recreate
+      app: grafana
   template:
     metadata:
       labels:
-        app: wordpress
+        app: grafana
     spec:
       containers:
-      - name: wordpress
-        image: wp_img
+      - name: grafana
+        image: grafana-img
         imagePullPolicy: Never
         ports:
-        - containerPort: 5050
+        - containerPort: 3000
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-service
+  name: grafana-service
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.99.105
+  loadBalancerIP: 192.168.99.130
   selector:
-    app: wordpress
+    app: grafana
   ports:
-  - port: 5050
-    name: http-wp
+  - port: 3000
+    name: http-grafana
     protocol: TCP
-    targetPort: 5050
+    targetPort: 3000

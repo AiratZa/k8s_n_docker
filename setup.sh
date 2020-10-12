@@ -6,8 +6,6 @@ function error_ocurred {
 	exit 1
 }
 
-# containers=("nginx" "ftps" "mysql" "influxdb" "phpmyadmin" "wordpress" "grafana")
-
 minikube start --vm-driver=virtualbox
 
 eval $(minikube docker-env)
@@ -39,19 +37,3 @@ kubectl apply -f srcs/yaml_configs_for_k8s/wordpress.yaml
 
 kubectl apply -f srcs/yaml_configs_for_k8s/phpmyadmin.yaml
 
-
-
-# for container in "${containers[@]}"
-# do
-# printf "docker build ${service}: "
-# docker build srcs/${service} -t "${service}-image" > /dev/null
-
-# printf "status - OK\n"
-# done
-
-# kubectl apply -f srcs/k8s_configs/volume.yaml
-
-# for service in "${services[@]}"
-# do
-# kubectl apply -f srcs/k8s_configs/${service}.yaml
-# done

@@ -9,7 +9,7 @@ openrc default
 rc-service mariadb start
 
 mysql < /srcs/db_init.sql
-# mysql wordpress < /srcs/wordpress.sql
+mysql wordpress < /srcs/wordpress.sql
 
 rc-service mariadb stop
 

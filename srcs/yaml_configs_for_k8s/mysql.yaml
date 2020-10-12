@@ -20,6 +20,8 @@ spec:
   selector:
     matchLabels:
       app: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -47,9 +49,9 @@ metadata:
   name: mysql-service
 spec:
   type: ClusterIP
+  selector:
+    app: mysql
   ports:
     - protocol  : TCP
       port      : 3306
       targetPort: 3306
-  selector:
-    app: mysql
