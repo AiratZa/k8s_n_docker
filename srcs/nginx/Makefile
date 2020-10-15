@@ -4,7 +4,7 @@ build:
 	docker build -t $(SERVICE_NAME) .
 
 run:
-	docker run --name $(SERVICE_NAME) -p 80:80 -p 443:443 -it -d $(SERVICE_NAME):latest
+	docker run --name $(SERVICE_NAME) -p 80:80 -p 443:443 -it $(SERVICE_NAME):latest
 
 exec:
 	docker exec -it $(SERVICE_NAME) bash

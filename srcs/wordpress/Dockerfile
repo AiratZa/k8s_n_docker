@@ -39,4 +39,4 @@ RUN mv /supervisord.conf /etc/supervisord.conf &&\
     sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
 
 # Run services
-CMD ["usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

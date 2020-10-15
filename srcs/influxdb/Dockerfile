@@ -19,22 +19,20 @@ RUN mkdir -p /var/lib/influxdb
 
 RUN mv /influxdb-* /etc/influxdb
 
+# Unzip and copy neccesary files of Telegraf
 RUN wget https://dl.influxdata.com/telegraf/releases/telegraf-1.15.3_linux_amd64.tar.gz &&\
     tar xf telegraf-1.15.3_linux_amd64.tar.gz
 
 RUN	cp -r /telegraf-1.15.3/* /  &&\
-	rm -rf /telegraf-1.15.3/ telegraf-1.15.3_linux_amd64.tar.gz \
+	rm -rf /telegraf-1.15.3/ telegraf-1.15.3_linux_amd64.tar.gz
 
 # Generating config file https://medium.com/@dganais/configuring-the-docker-telegraf-input-plugin-1bfd0d9f11a6
 RUN ./usr/bin/telegraf -sample-config --input-filter docker \
 						--output-filter influxdb > /etc/telegraf/telegraf.conf 
 
-COPY srcs/supervisor.d /etc/supervisord.conf
-
-COPY srcs/run_supervisor.d			/srcs/
-
-RUN chmod +x /srcs/run_supervisor.d
+COPY srcs/supervisord.conf /etc/supervisord.conf
 
 VOLUME /var/lib/influxdb
 
-ENTRYPOINT ["sh", "/srcs/run_supervisor.sh"]
+# Run services
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

@@ -6,6 +6,8 @@ spec:
   selector:
     matchLabels:
       app: grafana
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -13,7 +15,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana-img
+        image: grafana_img
         imagePullPolicy: Never
         ports:
         - containerPort: 3000

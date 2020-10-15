@@ -23,7 +23,7 @@ RUN rc-update add php-fpm7 default
 
 # Getting phpMyAdmin, unzip, moving and setting config
 RUN curl -O https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.zip &&\
-    unzip phpMyAdmin-5.0.2-all-languages.zip && rm -rf phpMyAdmin-5.0.2-all-languages.zip &&\
+    unzip phpMyAdmin-5.0.2-all-languages.zip && rm -rf phpMyAdmin-5.0.2-all-languages.zip  > /dev/null &&\
     mv phpMyAdmin-5.0.2-all-languages phpmyadmin && rm -rf phpmyadmin/config.sample.inc.php &&\
     mv /config.inc.php phpmyadmin/ && mv phpmyadmin /var/www/ && rm -rf /var/www/html
 
@@ -38,4 +38,4 @@ RUN mv /supervisord.conf /etc/supervisord.conf &&\
     sed -i 's/;daemonize = yes/daemonize = no/g' /etc/php7/php-fpm.conf
 
 # Run services
-CMD ["usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

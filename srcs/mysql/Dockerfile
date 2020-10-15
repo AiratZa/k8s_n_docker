@@ -2,9 +2,9 @@ FROM alpine:latest
 
 MAINTAINER gdrake <gdrake@student.42.fr>
 
-VOLUME /var/lib/mysql
-
 EXPOSE 3306
+
+VOLUME /var/lib/mysql
 
 # Copying configs and scripts
 COPY srcs /srcs

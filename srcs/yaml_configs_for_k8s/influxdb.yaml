@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: influx-pv-claim
+  name: influxdb-pv-claim
 spec:
-  storageClassName: influx-volume
+  storageClassName: influxdb-volume
   accessModes:
     - ReadWriteOnce
   resources:
@@ -20,26 +20,28 @@ spec:
   selector:
     matchLabels:
       app: influxdb
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: influxdb
     spec:
       volumes:
-      - name: influx-persistent-storage
+      - name: influxdb-persistent-storage
         persistentVolumeClaim:
-          claimName: influx-pv-claim
+          claimName: influxdb-pv-claim
       - name: dockersock
         hostPath:
           path: /var/run/docker.sock
       containers:
-      - name: influx
-        image: influx-img
+      - name: influxdb
+        image: influxdb_img
         imagePullPolicy: Never
         ports:
         - containerPort: 8086
         volumeMounts:
-        - name: influx-persistent-storage
+        - name: influxdb-persistent-storage
           mountPath: /var/lib/influxdb
         - name: dockersock
           mountPath: /var/run/docker.sock
@@ -49,7 +51,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: influx-service
+  name: influxdb-service
 spec:
   type: ClusterIP
   selector:
