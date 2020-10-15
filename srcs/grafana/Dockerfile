@@ -17,13 +17,12 @@ RUN wget https://dl.grafana.com/oss/release/grafana-7.2.1.linux-amd64.tar.gz &&\
     rm -f grafana-7.2.1.linux-amd64.tar.gz
 
 RUN mv grafana-* /grafana 
-#&&\
-#    cp /grafana/conf/defaults.ini /etc/grafana.ini
 
 COPY srcs/grafana.db		/grafana/data/
 
 COPY srcs/supervisord.conf /etc/supervisord.conf
 
 WORKDIR /grafana/bin/
+
 # Run services
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
